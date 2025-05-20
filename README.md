@@ -52,3 +52,4 @@ Cada módulo está organizado en capas:
 - **Entities**: Entidades de base de datos (TypeORM)
 - **DTOs**: Objetos de transferencia de datos
 - **Guards**: Protección de rutas
+
