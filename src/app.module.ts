@@ -5,6 +5,9 @@ import { PersonasModule } from './modules/personas/personas.module';
 import { UsuariosModule } from './modules/usuarios/usuarios.module';
 import { RolesModule } from './modules/roles/roles.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { DepartamentosModule } from './modules/departamentos/departamentos.module';
+import { MunicipiosModule } from './modules/municipios/municipios.module';
+import { DistritosModule } from './modules/distritos/distritos.module';
 
 @Module({
   imports: [
@@ -26,6 +29,9 @@ import { AuthModule } from './modules/auth/auth.module';
     UsuariosModule,
     RolesModule,
     AuthModule,
+    DepartamentosModule,
+    MunicipiosModule,
+    DistritosModule,
   ],
 })
 export class AppModule {}
