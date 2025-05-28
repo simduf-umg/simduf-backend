@@ -60,6 +60,7 @@ async function bootstrap() {
     console.log('Creando usuario admin...');
     const adminUsuario = await usuariosService.create({
       username: 'admin',
+      correo: 'admin@simduf.com',
       contrasena: 'Admin123!',
       id_persona: adminPersona.id_persona,
       activo: true,
@@ -80,6 +81,7 @@ async function bootstrap() {
     console.log('Creando usuario normal...');
     const usuario = await usuariosService.create({
       username: 'usuario',
+      correo: 'usuario@simduf.com',
       contrasena: 'Usuario123!',
       id_persona: userPersona.id_persona,
       activo: true,
