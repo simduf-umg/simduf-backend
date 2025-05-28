@@ -13,10 +13,10 @@ export class Concentracion {
 
   @ApiProperty({
     description: 'Valor de la concentración',
-    example: '500',
+    example: 500,
   })
-  @Column({ type: 'varchar', length: 50 })
-  valor: string;
+  @Column({ type: 'int' })
+  valor: number;
 
   @ApiProperty({
     description: 'Unidad de medida',

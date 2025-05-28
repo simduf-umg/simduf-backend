@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumber, IsOptional, IsString, Min, IsDecimal } from 'class-validator';
+import { IsNotEmpty, IsNumber, Min, IsOptional } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 
@@ -31,22 +31,22 @@ export class CreateDetallePedidoDto {
   cantidad_solicitada: number;
 
   @ApiProperty({
-    description: 'Observaciones específicas del detalle',
-    example: 'Preferir lote más reciente',
-    required: false,
-  })
-  @IsOptional()
-  @IsString({ message: 'Las observaciones deben ser un texto' })
-  observaciones?: string;
-
-  @ApiProperty({
-    description: 'Precio unitario en el momento del pedido',
-    example: 2.50,
+    description: 'Cantidad disponible',
+    example: 80,
     required: false,
   })
   @IsOptional()
   @Type(() => Number)
-  @IsNumber({ maxDecimalPlaces: 2 }, { message: 'El precio unitario debe ser un número con máximo 2 decimales' })
-  @Min(0, { message: 'El precio unitario no puede ser negativo' })
-  precio_unitario?: number;
+  @IsNumber({}, { message: 'La cantidad disponible debe ser un número' })
+  cantidad_disponible?: number;
+
+  @ApiProperty({
+    description: 'Cantidad aprobada',
+    example: 80,
+    required: false,
+  })
+  @IsOptional()
+  @Type(() => Number)
+  @IsNumber({}, { message: 'La cantidad aprobada debe ser un número' })
+  cantidad_aprobada?: number;
 }

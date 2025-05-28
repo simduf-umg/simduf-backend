@@ -6,9 +6,7 @@ import {
   Param,
   ParseIntPipe,
   Post,
-  Query,
   UseGuards,
-  Request,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
@@ -22,7 +20,6 @@ import {
 import { SeguimientosService } from '../services/seguimientos.service';
 import { Seguimiento } from '../entities/seguimiento.entity';
 import { CreateSeguimientoDto } from '../dtos/create-seguimiento.dto';
-import { FiltrosSeguimientoDto } from '../dtos/filtros-seguimiento.dto';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../../auth/guards/roles.guard';
 import { Roles } from '../../auth/decorators/roles.decorator';
@@ -35,14 +32,14 @@ export class SeguimientosController {
   constructor(private readonly seguimientosService: SeguimientosService) {}
 
   @Get()
-  @ApiOperation({ summary: 'Obtener todos los seguimientos con filtros' })
+  @ApiOperation({ summary: 'Obtener todos los seguimientos' })
   @ApiOkResponse({
     description: 'Lista de seguimientos obtenida correctamente',
     type: [Seguimiento],
   })
   @ApiUnauthorizedResponse({ description: 'No autorizado' })
-  async findAll(@Query() filtros: FiltrosSeguimientoDto) {
-    return this.seguimientosService.findAll(filtros);
+  async findAll() {
+    return this.seguimientosService.findAll();
   }
 
   @Get(':id')

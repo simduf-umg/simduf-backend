@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumber, IsOptional, IsIn, IsDateString, IsString, IsArray, ValidateNested, ArrayMinSize } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsOptional, IsString, IsArray, ValidateNested, ArrayMinSize } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 
@@ -38,24 +38,13 @@ export class CreatePedidoDto {
   @IsNumber({}, { message: 'El ID del usuario solicitante debe ser un número' })
   id_usuario_solicitante: number;
 
-
   @ApiProperty({
     description: 'ID del usuario autorizador',
     example: 2,
-    required: false,
   })
+  @IsNotEmpty({ message: 'El ID del usuario autorizador es requerido' })
   @IsNumber({}, { message: 'El ID del usuario autorizador debe ser un número' })
-  id_usuario_autorizador?: number;
-  
-
-  @ApiProperty({
-    description: 'Fecha límite requerida',
-    example: '2024-01-20',
-    required: false,
-  })
-  @IsOptional()
-  @IsDateString({}, { message: 'La fecha límite debe ser una fecha válida' })
-  fecha_limite_requerida?: string;
+  id_usuario_autorizador: number;
 
   @ApiProperty({
     description: 'Observaciones del pedido',
@@ -65,18 +54,6 @@ export class CreatePedidoDto {
   @IsOptional()
   @IsString({ message: 'Las observaciones deben ser un texto' })
   observaciones?: string;
-
-  @ApiProperty({
-    description: 'Prioridad del pedido',
-    example: 'MEDIA',
-    enum: ['ALTA', 'MEDIA', 'BAJA'],
-    default: 'MEDIA',
-  })
-  @IsOptional()
-  @IsIn(['ALTA', 'MEDIA', 'BAJA'], {
-    message: 'La prioridad debe ser ALTA, MEDIA o BAJA',
-  })
-  prioridad?: string = 'MEDIA';
 
   @ApiProperty({
     description: 'Detalles del pedido (medicamentos solicitados)',

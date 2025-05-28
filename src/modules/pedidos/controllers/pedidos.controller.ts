@@ -8,7 +8,6 @@ import {
   Patch,
   Post,
   Put,
-  Query,
   UseGuards,
 } from '@nestjs/common';
 import {
@@ -17,7 +16,6 @@ import {
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
-  ApiQuery,
   ApiTags,
   ApiUnauthorizedResponse,
   ApiBadRequestResponse,
@@ -49,60 +47,6 @@ export class PedidosController {
     return this.pedidosService.findAll();
   }
 
-  @Get('estadisticas')
-  @ApiOperation({ summary: 'Obtener estadísticas de pedidos' })
-  @ApiQuery({ name: 'fechaInicio', required: false, example: '2024-01-01' })
-  @ApiQuery({ name: 'fechaFin', required: false, example: '2024-12-31' })
-  @ApiOkResponse({ description: 'Estadísticas obtenidas correctamente' })
-  @ApiUnauthorizedResponse({ description: 'No autorizado' })
-  async getEstadisticas(
-    @Query('fechaInicio') fechaInicio?: string,
-    @Query('fechaFin') fechaFin?: string,
-  ) {
-    const inicio = fechaInicio ? new Date(fechaInicio) : undefined;
-    const fin = fechaFin ? new Date(fechaFin) : undefined;
-    return this.pedidosService.getEstadisticasPedidos(inicio, fin);
-  }
-
-  @Get('pendientes')
-  @ApiOperation({ summary: 'Obtener pedidos pendientes' })
-  @ApiOkResponse({
-    description: 'Pedidos pendientes obtenidos correctamente',
-    type: [Pedido],
-  })
-  @ApiUnauthorizedResponse({ description: 'No autorizado' })
-  async findPedidosPendientes(): Promise<Pedido[]> {
-    return this.pedidosService.findPedidosPendientes();
-  }
-
-  @Get('vencidos')
-  @ApiOperation({ summary: 'Obtener pedidos vencidos' })
-  @ApiOkResponse({
-    description: 'Pedidos vencidos obtenidos correctamente',
-    type: [Pedido],
-  })
-  @ApiUnauthorizedResponse({ description: 'No autorizado' })
-  async findPedidosVencidos(): Promise<Pedido[]> {
-    return this.pedidosService.findPedidosVencidos();
-  }
-
-  @Get('proximos-vencer')
-  @ApiOperation({ summary: 'Obtener pedidos próximos a vencer' })
-  @ApiQuery({ 
-    name: 'dias', 
-    required: false, 
-    description: 'Días de anticipación (por defecto 3)',
-    example: 3 
-  })
-  @ApiOkResponse({
-    description: 'Pedidos próximos a vencer obtenidos correctamente',
-    type: [Pedido],
-  })
-  @ApiUnauthorizedResponse({ description: 'No autorizado' })
-  async findPedidosProximosVencer(@Query('dias') dias?: number): Promise<Pedido[]> {
-    return this.pedidosService.findPedidosProximosVencer(dias);
-  }
-
   @Get('estado/:estado')
   @ApiOperation({ summary: 'Obtener pedidos por estado' })
   @ApiOkResponse({
@@ -112,17 +56,6 @@ export class PedidosController {
   @ApiUnauthorizedResponse({ description: 'No autorizado' })
   async findByEstado(@Param('estado') estado: string): Promise<Pedido[]> {
     return this.pedidosService.findByEstado(estado);
-  }
-
-  @Get('prioridad/:prioridad')
-  @ApiOperation({ summary: 'Obtener pedidos por prioridad' })
-  @ApiOkResponse({
-    description: 'Pedidos por prioridad obtenidos correctamente',
-    type: [Pedido],
-  })
-  @ApiUnauthorizedResponse({ description: 'No autorizado' })
-  async findByPrioridad(@Param('prioridad') prioridad: string): Promise<Pedido[]> {
-    return this.pedidosService.findByPrioridad(prioridad);
   }
 
   @Get('usuario-solicitante/:idUsuario')
@@ -145,22 +78,6 @@ export class PedidosController {
   @ApiUnauthorizedResponse({ description: 'No autorizado' })
   async findByUsuarioAutorizador(@Param('idUsuario', ParseIntPipe) idUsuario: number): Promise<Pedido[]> {
     return this.pedidosService.findByUsuarioAutorizador(idUsuario);
-  }
-
-  @Get('fechas')
-  @ApiOperation({ summary: 'Obtener pedidos por rango de fechas' })
-  @ApiQuery({ name: 'fechaInicio', required: true, example: '2024-01-01' })
-  @ApiQuery({ name: 'fechaFin', required: true, example: '2024-12-31' })
-  @ApiOkResponse({
-    description: 'Pedidos por fechas obtenidos correctamente',
-    type: [Pedido],
-  })
-  @ApiUnauthorizedResponse({ description: 'No autorizado' })
-  async findByFechas(
-    @Query('fechaInicio') fechaInicio: string,
-    @Query('fechaFin') fechaFin: string,
-  ): Promise<Pedido[]> {
-    return this.pedidosService.findByFechas(new Date(fechaInicio), new Date(fechaFin));
   }
 
   @Get(':id')
@@ -227,7 +144,7 @@ export class PedidosController {
   @ApiOperation({ summary: 'Eliminar un pedido por ID' })
   @ApiOkResponse({ description: 'Pedido eliminado correctamente' })
   @ApiNotFoundResponse({ description: 'Pedido no encontrado' })
-  @ApiBadRequestResponse({ description: 'Solo se pueden eliminar pedidos pendientes, rechazados o cancelados' })
+  @ApiBadRequestResponse({ description: 'Solo se pueden eliminar pedidos pendientes o rechazados' })
   @ApiUnauthorizedResponse({ description: 'No autorizado' })
   async remove(@Param('id', ParseIntPipe) id: number): Promise<void> {
     return this.pedidosService.remove(id);

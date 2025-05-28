@@ -60,7 +60,7 @@ async function bootstrap() {
     console.log('Creando usuario admin...');
     const adminUsuario = await usuariosService.create({
       username: 'admin',
-      correo: 'admin@simduf.com',
+      correo: 'tulioalejandroquintana@gmail.com',
       contrasena: 'Admin123!',
       id_persona: adminPersona.id_persona,
       activo: true,
@@ -274,72 +274,18 @@ async function bootstrap() {
 
     console.log('Creando distritos...');
 
-    const distritosEjemplo = [
-      // Distritos de Ciudad de Guatemala
-      { nombre: 'Zona 1', municipio: 'Guatemala' },
-      { nombre: 'Zona 2', municipio: 'Guatemala' },
-      { nombre: 'Zona 3', municipio: 'Guatemala' },
-      { nombre: 'Zona 4', municipio: 'Guatemala' },
-      { nombre: 'Zona 5', municipio: 'Guatemala' },
-      { nombre: 'Zona 6', municipio: 'Guatemala' },
-      { nombre: 'Zona 7', municipio: 'Guatemala' },
-      { nombre: 'Zona 8', municipio: 'Guatemala' },
-      { nombre: 'Zona 9', municipio: 'Guatemala' },
-      { nombre: 'Zona 10', municipio: 'Guatemala' },
-      { nombre: 'Zona 11', municipio: 'Guatemala' },
-      { nombre: 'Zona 12', municipio: 'Guatemala' },
-      { nombre: 'Zona 13', municipio: 'Guatemala' },
-      { nombre: 'Zona 14', municipio: 'Guatemala' },
-      { nombre: 'Zona 15', municipio: 'Guatemala' },
-      { nombre: 'Zona 16', municipio: 'Guatemala' },
-      { nombre: 'Zona 17', municipio: 'Guatemala' },
-      { nombre: 'Zona 18', municipio: 'Guatemala' },
-      { nombre: 'Zona 19', municipio: 'Guatemala' },
-      { nombre: 'Zona 21', municipio: 'Guatemala' },
-      { nombre: 'Zona 24', municipio: 'Guatemala' },
-      { nombre: 'Zona 25', municipio: 'Guatemala' },
-      
-      // Distritos de Mixco
-      { nombre: 'Centro', municipio: 'Mixco' },
-      { nombre: 'Las Brisas', municipio: 'Mixco' },
-      { nombre: 'San José Las Rosas', municipio: 'Mixco' },
-      { nombre: 'Lo de Fuentes', municipio: 'Mixco' },
-      
-      // Distritos de Villa Nueva
-      { nombre: 'Centro', municipio: 'Villa Nueva' },
-      { nombre: 'Santa Isabel', municipio: 'Villa Nueva' },
-      { nombre: 'Bárcenas', municipio: 'Villa Nueva' },
-      { nombre: 'Villa Lobos', municipio: 'Villa Nueva' },
-      
+    const distritosEjemplo = [ 
       // Distritos de Jutiapa
-      { nombre: 'Centro', municipio: 'Jutiapa' },
-      { nombre: 'Barrio La Cruz', municipio: 'Jutiapa' },
-      { nombre: 'Barrio El Calvario', municipio: 'Jutiapa' },
-      { nombre: 'Barrio San José', municipio: 'Jutiapa' },
-      { nombre: 'Barrio El Centro', municipio: 'Jutiapa' },
-      { nombre: 'Colonia Las Flores', municipio: 'Jutiapa' },
-      { nombre: 'Aldea El Trapiche', municipio: 'Jutiapa' },
-      { nombre: 'Aldea Los Izotes', municipio: 'Jutiapa' },
+      { nombre: 'Distrito municipal de Jutiapa', municipio: 'Jutiapa' },
       
       // Distritos de El Progreso
-      { nombre: 'Centro', municipio: 'El Progreso' },
-      { nombre: 'Barrio El Porvenir', municipio: 'El Progreso' },
-      { nombre: 'Barrio La Libertad', municipio: 'El Progreso' },
-      { nombre: 'Barrio San Antonio', municipio: 'El Progreso' },
-      { nombre: 'Colonia Buenos Aires', municipio: 'El Progreso' },
-      { nombre: 'Aldea San Rafael', municipio: 'El Progreso' },
-      { nombre: 'Aldea El Rosario', municipio: 'El Progreso' },
-      { nombre: 'Caserío La Esperanza', municipio: 'El Progreso' },
+      { nombre: 'Distrito municipal de El Progreso', municipio: 'El Progreso' },
       
       // Distritos de Asunción Mita
-      { nombre: 'Centro', municipio: 'Asunción Mita' },
-      { nombre: 'Barrio El Carmen', municipio: 'Asunción Mita' },
-      { nombre: 'Barrio La Parroquia', municipio: 'Asunción Mita' },
-      { nombre: 'Barrio San Miguel', municipio: 'Asunción Mita' },
-      { nombre: 'Colonia El Milagro', municipio: 'Asunción Mita' },
-      { nombre: 'Aldea Valle Nuevo', municipio: 'Asunción Mita' },
-      { nombre: 'Aldea El Jocote', municipio: 'Asunción Mita' },
-      { nombre: 'Caserío Las Palmeras', municipio: 'Asunción Mita' }
+      { nombre: 'Distrito municipal de Asunción Mita', municipio: 'Asunción Mita' },
+
+      // Distritos de Jalapa
+      { nombre: 'Distrito municipal de Jalapa', municipio: 'Jalapa' },
     ];
 
     // Obtener todos los municipios para poder hacer la relación
@@ -361,14 +307,14 @@ async function bootstrap() {
     console.log('Creando concentraciones...');
 
     const concentraciones = [
-      { valor : '100mg', unidad_medida: 'mg' },
-      { valor : '200mg', unidad_medida: 'mg' },
-      { valor : '500mg', unidad_medida: 'mg' },
-      { valor : '1g', unidad_medida: 'g' },
-      { valor : '10mg/ml', unidad_medida: 'mg/ml' },
-      { valor : '20mg/ml', unidad_medida: 'mg/ml' },
-      { valor : '50mg/ml', unidad_medida: 'mg/ml' },
-      { valor : '100mg/ml', unidad_medida: 'mg/ml' }
+      { valor: 100, unidad_medida: 'mg' },
+      { valor: 200, unidad_medida: 'mg' },
+      { valor: 500, unidad_medida: 'mg' },
+      { valor: 1, unidad_medida: 'g' },
+      { valor: 10, unidad_medida: 'mg/ml' },
+      { valor: 20, unidad_medida: 'mg/ml' },
+      { valor: 50, unidad_medida: 'mg/ml' },
+      { valor: 100, unidad_medida: 'mg/ml' }
     ];
 
     for (const concentracion of concentraciones) {
@@ -506,23 +452,22 @@ async function bootstrap() {
     console.log('Inventarios creados');
 
 
-    const medicamentosAll = await medicamentosService.findAll();
-
     // PEDIDOS
     console.log('Creando pedidos...');
+    // Obtener usuarios y medicamentos
     const usuarios = await usuariosService.findAll();
-    const distritosAll = await distritosService.findAll();
+    const medicamentosAll = await medicamentosService.findAll();
+
+    // Crear un pedido
+    console.log('Creando pedido...');
     const pedido = await pedidosService.create({
       id_usuario_solicitante: usuarios[0].user_id,
       id_usuario_autorizador: usuarios[0].user_id,
-      fecha_limite_requerida: '2025-06-01',
       observaciones: 'Pedido de prueba desde seed',
-      prioridad: 'MEDIA',
       detalles: [
         {
           id_medicamento: medicamentosAll[0].id_medicamento,
-          cantidad_solicitada: 10,
-          observaciones: 'Preferir lote más reciente'
+          cantidad_solicitada: 10
         },
         {
           id_medicamento: medicamentosAll[1].id_medicamento,
@@ -532,44 +477,52 @@ async function bootstrap() {
     });
     console.log('Pedido creado:', pedido);
 
-    // DETALLE_PEDIDO
-    console.log('Creando detalle de pedido...');
-    const detallePedido = await detallePedidosService.create({
+    // Crear detalles de pedido adicionales (si necesitas agregarlos manualmente)
+    console.log('Creando detalles de pedido...');
+    const detalle = await detallePedidosService.create({
       id_pedido: pedido.id_pedido,
-      id_medicamento: medicamentosAll[0].id_medicamento,
+      id_medicamento: medicamentosAll[3].id_medicamento,
       cantidad_solicitada: 10,
-      observaciones: 'Preferir lote más reciente'
+      cantidad_disponible: 8,      // Puedes calcularlo según inventario
+      cantidad_aprobada: 8         // Puedes dejarlo igual a disponible o según lógica de negocio
     });
-    console.log('Detalle de pedido creado:', detallePedido);
+    console.log('Detalle de pedido creado:', detalle);
 
     // MOVIMIENTOS
     console.log('Creando movimiento...');
     const inventariosAll = await inventariosService.findAll();
     const lotesAll = await lotesService.findAll();
+
     const movimiento = await movimientosService.create({
       id_inventario: inventariosAll[0].id_inventario,
-      id_usuario: usuarios[0].user_id,
       id_lote: lotesAll[0].id_lote,
-      tipo: 'Salida',
+      tipo: 'SALIDA', // o 'ENTRADA'
       cantidad: 10,
       fecha_movimiento: new Date(),
       motivo: 'Pedido de prueba desde seed',
+      user_id: usuarios[0].user_id,
     });
     console.log('Movimiento creado:', movimiento);
 
-    // ASIGNACION_USUARIO
-    console.log('Creando asignación de usuario...');
-    const asignacion = await asignacionUsuarioService.create({
-      user_id: usuarios[0].user_id,
-      id_distrito: distritosAll[0].id_distrito
-    });
-    console.log('Asignación de usuario creada:', asignacion);
+    // ASIGNACION_USUARIO: asignar usuario admin al distrito de Jutiapa
+    console.log('Asignando usuario admin al distrito de Jutiapa...');
+    const distritosAll = await distritosService.findAll();
+    const distritoJutiapa = distritosAll.find(d => d.nombre.includes('Jutiapa'));
+    if (distritoJutiapa) {
+      const asignacionAdmin = await asignacionUsuarioService.create({
+        user_id: usuarios[0].user_id, // usuario admin
+        id_distrito: distritoJutiapa.id_distrito
+      });
+      console.log('Asignación de usuario admin al distrito de Jutiapa creada:', asignacionAdmin);
+    } else {
+      console.warn('No se encontró el distrito de Jutiapa para asignar el usuario admin.');
+    }
 
     // SEGUIMIENTOS
     console.log('Creando seguimiento...');
     const seguimiento = await seguimientosService.create({
       id_usuario_admin: usuarios[0].user_id,
-      id_distrito: distritosAll[0].id_distrito,
+      id_distrito: distritos[0].id_distrito,
       fecha_visita: new Date(),
       fortalezas: 'Entrega rápida',
       debilidades: 'Ninguna',
@@ -577,8 +530,6 @@ async function bootstrap() {
       conclusiones: 'Todo correcto'
     });
     console.log('Seguimiento creado:', seguimiento);
-
-
 
     console.log('Proceso de semilla completado exitosamente!');
 
