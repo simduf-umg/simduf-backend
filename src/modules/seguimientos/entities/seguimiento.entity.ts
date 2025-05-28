@@ -37,12 +37,11 @@ export class Seguimiento {
   @Column({ type: 'text', nullable: true })
   conclusiones: string;
 
-  // Relaciones (opcional, si quieres acceder a los objetos relacionados)
-  @ManyToOne(() => Usuario, { eager: false })
+  @ManyToOne(() => Usuario)
   @JoinColumn({ name: 'id_usuario_admin' })
   usuario_admin: Usuario;
 
-  @ManyToOne(() => Distrito, { eager: false })
+  @ManyToOne(() => Distrito)
   @JoinColumn({ name: 'id_distrito' })
   distrito: Distrito;
 }

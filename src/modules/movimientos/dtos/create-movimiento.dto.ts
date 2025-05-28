@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, Length, IsNumber, IsOptional, IsIn, Min } from 'class-validator';
+import { IsNotEmpty, IsString, Length, IsNumber, IsIn, Min } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 
@@ -12,29 +12,21 @@ export class CreateMovimientoDto {
   id_inventario: number;
 
   @ApiProperty({
-    description: 'ID del usuario que realiza el movimiento',
-    example: 1,
-  })
-  @IsNotEmpty({ message: 'El ID del usuario es requerido' })
-  @IsNumber({}, { message: 'El ID del usuario debe ser un número' })
-  id_usuario: number;
-
-  @ApiProperty({
     description: 'ID del lote asociado al movimiento',
     example: 1,
   })
   @IsNotEmpty({ message: 'El ID del lote es requerido' })
   @IsNumber({}, { message: 'El ID del lote debe ser un número' })
   id_lote: number;
-  
+
   @ApiProperty({
     description: 'Tipo de movimiento',
     example: 'ENTRADA',
-    enum: ['ENTRADA', 'SALIDA', 'TRANSFERENCIA', 'AJUSTE', 'DEVOLUCION'],
+    enum: ['ENTRADA', 'SALIDA'],
   })
   @IsNotEmpty({ message: 'El tipo de movimiento es requerido' })
-  @IsIn(['ENTRADA', 'SALIDA', 'TRANSFERENCIA', 'AJUSTE', 'DEVOLUCION'], {
-    message: 'El tipo debe ser ENTRADA, SALIDA, TRANSFERENCIA, AJUSTE o DEVOLUCION',
+  @IsIn(['ENTRADA', 'SALIDA'], {
+    message: 'El tipo debe ser ENTRADA o SALIDA',
   })
   tipo: string;
 
@@ -63,31 +55,17 @@ export class CreateMovimientoDto {
   motivo: string;
 
   @ApiProperty({
-    description: 'Observaciones adicionales',
-    example: 'Movimiento autorizado por farmacia central',
-    required: false,
-  })
-  @IsOptional()
-  @IsString({ message: 'Las observaciones deben ser un texto' })
-  observaciones?: string;
-
-  @ApiProperty({
     description: 'Fecha del movimiento',
     example: '2024-01-15T10:30:00Z',
   })
   @IsNotEmpty({ message: 'La fecha del movimiento es requerida' })
-  @IsString({ message: 'La fecha del movimiento debe ser una cadena de texto' })
   fecha_movimiento: Date;
 
   @ApiProperty({
-    description: 'Estado del movimiento',
-    example: 'PENDIENTE',
-    enum: ['PENDIENTE', 'COMPLETADO', 'CANCELADO'],
-    default: 'PENDIENTE',
+    description: 'ID del usuario que registra el movimiento',
+    example: 1,
   })
-  @IsOptional()
-  @IsIn(['PENDIENTE', 'COMPLETADO', 'CANCELADO'], {
-    message: 'El estado debe ser PENDIENTE, COMPLETADO o CANCELADO',
-  })
-  estado?: string = 'PENDIENTE';
+  @IsNotEmpty({ message: 'El ID del usuario es requerido' })
+  @IsNumber({}, { message: 'El ID del usuario debe ser un número' })
+  user_id: number;
 }

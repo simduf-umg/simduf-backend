@@ -5,7 +5,6 @@ import {
   Get,
   Param,
   ParseIntPipe,
-  Patch,
   Post,
   Put,
   Query,
@@ -26,7 +25,6 @@ import { MovimientosService } from '../services/movimientos.service';
 import { Movimiento } from '../entities/movimiento.entity';
 import { CreateMovimientoDto } from '../dtos/create-movimiento.dto';
 import { UpdateMovimientoDto } from '../dtos/update-movimiento.dto';
-import { CambiarEstadoDto } from '../dtos/cambiar-estado.dto';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../../auth/guards/roles.guard';
 import { Roles } from '../../auth/decorators/roles.decorator';
@@ -64,17 +62,6 @@ export class MovimientosController {
     return this.movimientosService.getEstadisticasMovimientos(inicio, fin);
   }
 
-  @Get('pendientes')
-  @ApiOperation({ summary: 'Obtener movimientos pendientes' })
-  @ApiOkResponse({
-    description: 'Movimientos pendientes obtenidos correctamente',
-    type: [Movimiento],
-  })
-  @ApiUnauthorizedResponse({ description: 'No autorizado' })
-  async findMovimientosPendientes(): Promise<Movimiento[]> {
-    return this.movimientosService.findMovimientosPendientes();
-  }
-
   @Get('tipo/:tipo')
   @ApiOperation({ summary: 'Obtener movimientos por tipo' })
   @ApiOkResponse({
@@ -84,17 +71,6 @@ export class MovimientosController {
   @ApiUnauthorizedResponse({ description: 'No autorizado' })
   async findByTipo(@Param('tipo') tipo: string): Promise<Movimiento[]> {
     return this.movimientosService.findByTipo(tipo);
-  }
-
-  @Get('estado/:estado')
-  @ApiOperation({ summary: 'Obtener movimientos por estado' })
-  @ApiOkResponse({
-    description: 'Movimientos por estado obtenidos correctamente',
-    type: [Movimiento],
-  })
-  @ApiUnauthorizedResponse({ description: 'No autorizado' })
-  async findByEstado(@Param('estado') estado: string): Promise<Movimiento[]> {
-    return this.movimientosService.findByEstado(estado);
   }
 
   @Get('inventario/:idInventario')
@@ -168,7 +144,6 @@ export class MovimientosController {
     type: Movimiento,
   })
   @ApiNotFoundResponse({ description: 'Movimiento no encontrado' })
-  @ApiBadRequestResponse({ description: 'Solo se pueden actualizar movimientos pendientes' })
   @ApiUnauthorizedResponse({ description: 'No autorizado' })
   async update(
     @Param('id', ParseIntPipe) id: number,
@@ -177,29 +152,11 @@ export class MovimientosController {
     return this.movimientosService.update(id, updateMovimientoDto);
   }
 
-  @Patch(':id/estado')
-  @Roles('ADMIN', 'FARMACEUTICO')
-  @ApiOperation({ summary: 'Cambiar estado de un movimiento' })
-  @ApiOkResponse({
-    description: 'Estado del movimiento cambiado correctamente',
-    type: Movimiento,
-  })
-  @ApiNotFoundResponse({ description: 'Movimiento no encontrado' })
-  @ApiBadRequestResponse({ description: 'Stock insuficiente para procesar' })
-  @ApiUnauthorizedResponse({ description: 'No autorizado' })
-  async cambiarEstado(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() cambiarEstadoDto: CambiarEstadoDto,
-  ): Promise<Movimiento> {
-    return this.movimientosService.cambiarEstado(id, cambiarEstadoDto);
-  }
-
   @Delete(':id')
   @Roles('ADMIN')
   @ApiOperation({ summary: 'Eliminar un movimiento por ID' })
   @ApiOkResponse({ description: 'Movimiento eliminado correctamente' })
   @ApiNotFoundResponse({ description: 'Movimiento no encontrado' })
-  @ApiBadRequestResponse({ description: 'No se puede eliminar un movimiento completado' })
   @ApiUnauthorizedResponse({ description: 'No autorizado' })
   async remove(@Param('id', ParseIntPipe) id: number): Promise<void> {
     return this.movimientosService.remove(id);

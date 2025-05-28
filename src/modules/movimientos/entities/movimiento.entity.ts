@@ -1,7 +1,8 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, CreateDateColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { Inventario } from '../../inventarios/entities/inventario.entity';
 import { Usuario } from '../../usuarios/entities/usuario.entity';
+import { Lote } from '../../lotes/entities/lote.entity';
 
 @Entity('movimientos')
 export class Movimiento {
@@ -20,13 +21,6 @@ export class Movimiento {
   id_inventario: number;
 
   @ApiProperty({
-    description: 'ID del usuario que realizó el movimiento',
-    example: 1,
-  })
-  @Column()
-  id_usuario: number;
-
-  @ApiProperty({
     description: 'ID del lote asociado al movimiento',
     example: 1,
   })
@@ -35,7 +29,7 @@ export class Movimiento {
 
   @ApiProperty({
     description: 'Tipo de movimiento',
-    example: 'Entrada, Salida',
+    example: 'ENTRADA',
     enum: ['ENTRADA', 'SALIDA', 'TRANSFERENCIA', 'AJUSTE', 'DEVOLUCION'],
   })
   @Column({ 
@@ -53,6 +47,13 @@ export class Movimiento {
   cantidad: number;
 
   @ApiProperty({
+    description: 'Fecha del movimiento',
+    example: '2024-01-15T10:30:00Z',
+  })
+  @Column({ type: 'timestamp' })
+  fecha_movimiento: Date;
+
+  @ApiProperty({
     description: 'Motivo del movimiento',
     example: 'Pedido, Solicitud',
   })
@@ -60,40 +61,22 @@ export class Movimiento {
   motivo: string;
 
   @ApiProperty({
-    description: 'Fecha del movimiento',
-    example: '2024-01-15T10:30:00Z',
+    description: 'ID del usuario que registra el movimiento',
+    example: 1,
   })
-  @CreateDateColumn()
-  fecha_movimiento: Date;
+  @Column()
+  user_id: number;
 
-  @ApiProperty({
-    description: 'Observaciones adicionales',
-    example: 'Movimiento autorizado por farmacia central',
-  })
-  @Column({ type: 'text', nullable: true })
-  observaciones: string;
-
-  @ApiProperty({
-    description: 'Estado del movimiento',
-    example: 'PENDIENTE, COMPLETADO, CANCELADO',
-    enum: ['PENDIENTE', 'COMPLETADO', 'CANCELADO'],
-  })
-  @Column({ 
-    type: 'varchar', 
-    length: 20, 
-    default: 'PENDIENTE',
-    enum: ['PENDIENTE', 'COMPLETADO', 'CANCELADO']
-  })
-  estado: string;
-
-  // Relación con Inventario
-  @ManyToOne(() => Inventario, (inventario) => inventario.movimientos)
+  // Relaciones
+  @ManyToOne(() => Inventario)
   @JoinColumn({ name: 'id_inventario' })
   inventario: Inventario;
 
-  // Relación con Usuario
-  @ManyToOne(() => Usuario, (usuario) => usuario.id_persona)
-  @JoinColumn({ name: 'id_usuario' })
-  usuario: Usuario;
+  @ManyToOne(() => Lote)
+  @JoinColumn({ name: 'id_lote' })
+  lote: Lote;
 
+  @ManyToOne(() => Usuario)
+  @JoinColumn({ name: 'user_id' })
+  usuario: Usuario;
 }
