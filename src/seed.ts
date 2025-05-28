@@ -6,6 +6,16 @@ import { UsuariosService } from './modules/usuarios/services/usuarios.service';
 import { DepartamentosService } from './modules/departamentos/services/departamentos.service';
 import { MunicipiosService } from './modules/municipios/services/municipios.service';
 import { DistritosService } from './modules/distritos/services/distritos.service';
+import { ConcentracionesService } from './modules/concentraciones/services/concentraciones.service';
+import { PresentacionesService } from './modules/presentaciones/services/presentaciones.service';
+import { MedicamentosService } from './modules/medicamentos/services/medicamentos.service';
+import { LotesService } from './modules/lotes/services/lotes.service';
+import { InventariosService } from './modules/inventarios/services/inventarios.service';
+import { PedidosService } from './modules/pedidos/services/pedidos.service';
+import { DetallePedidosService } from './modules/detalle-pedidos/services/detalle-pedidos.service';
+import { MovimientosService } from './modules/movimientos/services/movimientos.service';
+import { AsignacionUsuarioService } from './modules/asignacion-usuarios/services/asignacion-usuarios.service';
+import { SeguimientosService } from './modules/seguimientos/services/seguimientos.service';
 
 async function bootstrap() {
   const app = await NestFactory.createApplicationContext(AppModule);
@@ -20,6 +30,16 @@ async function bootstrap() {
     const departamentosService = app.get(DepartamentosService);
     const municipiosService = app.get(MunicipiosService);
     const distritosService = app.get(DistritosService);
+    const concentracionesService = app.get(ConcentracionesService);
+    const presentacionesService = app.get(PresentacionesService);
+    const medicamentosService = app.get(MedicamentosService); 
+    const lotesService = app.get(LotesService);
+    const inventariosService = app.get(InventariosService);
+    const pedidosService = app.get(PedidosService);
+    const detallePedidosService = app.get(DetallePedidosService);
+    const movimientosService = app.get(MovimientosService);
+    const asignacionUsuarioService = app.get(AsignacionUsuarioService);
+    const seguimientosService = app.get(SeguimientosService);
 
     // Crear roles
     console.log('Creando roles...');
@@ -334,6 +354,229 @@ async function bootstrap() {
     }
 
     console.log(`${distritosEjemplo.length} distritos creados`);
+
+
+    console.log('Creando concentraciones...');
+
+    const concentraciones = [
+      { valor : '100mg', unidad_medida: 'mg' },
+      { valor : '200mg', unidad_medida: 'mg' },
+      { valor : '500mg', unidad_medida: 'mg' },
+      { valor : '1g', unidad_medida: 'g' },
+      { valor : '10mg/ml', unidad_medida: 'mg/ml' },
+      { valor : '20mg/ml', unidad_medida: 'mg/ml' },
+      { valor : '50mg/ml', unidad_medida: 'mg/ml' },
+      { valor : '100mg/ml', unidad_medida: 'mg/ml' }
+    ];
+
+    for (const concentracion of concentraciones) {
+      await concentracionesService.create(concentracion);
+    }
+    console.log(`${concentraciones.length} concentraciones creadas`);
+
+    console.log('Creando presentaciones...');
+
+    const presentaciones = [
+      { nombre: 'Tableta', descripcion: 'Tableta de medicamento' },
+      { nombre: 'Jarabe', descripcion: 'Jarabe de medicamento' },
+      { nombre: 'Inyección', descripcion: 'Inyección de medicamento' },
+      { nombre: 'Crema', descripcion: 'Crema de medicamento' },
+      { nombre: 'Gotas', descripcion: 'Gotas de medicamento' },
+      { nombre: 'Supositorio', descripcion: 'Supositorio de medicamento' },
+      { nombre: 'Polvo', descripcion: 'Polvo de medicamento' },
+      { nombre: 'Solución', descripcion: 'Solución de medicamento' }
+    ];
+
+    for (const presentacion of presentaciones) {
+      await presentacionesService.create(presentacion);
+    }
+    console.log(`${presentaciones.length} presentaciones creadas`);
+
+    console.log('Creando medicamentos...');
+
+    const medicamentos = [
+      {
+        nombre: 'Paracetamol',
+        codigo: 'PARA001',
+        descripcion: 'Analgésico y antipirético',
+        concentracionId: 1, // 100mg
+        presentacionId: 1 // Tableta
+      },
+      {
+        nombre: 'Ibuprofeno',
+        codigo: 'IBUP001',
+        descripcion: 'Antiinflamatorio no esteroideo',
+        concentracionId: 2, // 200mg
+        presentacionId: 1 // Tableta
+      },
+      {
+        nombre: 'Amoxicilina',
+        codigo: 'AMOX001',
+        descripcion: 'Antibiótico de amplio espectro',
+        concentracionId: 3, // 500mg
+        presentacionId: 1 // Tableta
+      },
+      {
+        nombre: 'Metformina',
+        codigo: 'METF001',
+        descripcion: 'Antidiabético oral',
+        concentracionId: 4, // 1g
+        presentacionId: 1 // Tableta
+      },
+      {
+        nombre: 'Loratadina',
+        codigo: 'LORA001',
+        descripcion: 'Antihistamínico para alergias',
+        concentracionId: 5, // 10mg/ml
+        presentacionId: 2 // Jarabe
+      },
+      {
+        nombre: 'Omeprazol',
+        codigo: 'OMEP001',
+        descripcion: 'Inhibidor de la bomba de protones',
+        concentracionId: 6, // 20mg/ml
+        presentacionId: 3 // Inyección
+      },
+      {
+        nombre: 'Ciprofloxacino',
+        codigo: 'CIPR001',
+        descripcion: 'Antibiótico fluoroquinolona',
+        concentracionId: 7, // 50mg/ml
+        presentacionId: 4 // Crema
+      },
+      {
+        nombre: 'Clorfenamina',
+        codigo: 'CLOR001',
+        descripcion: 'Antihistamínico para resfriados y alergias',
+        concentracionId: 8, // 100mg/ml
+        presentacionId: 5 // Gotas
+      }
+    ];
+
+    for (const medicamento of medicamentos) {
+      await medicamentosService.create({
+        nombre: medicamento.nombre,
+        codigo: medicamento.codigo,
+        descripcion: medicamento.descripcion,
+        id_concentracion: medicamento.concentracionId,
+        id_presentacion: medicamento.presentacionId
+      });
+    }
+
+    console.log(`${medicamentos.length} medicamentos creados`);
+
+    console.log('Creando lotes...');
+
+    // Obtener todos los medicamentos creados
+    const medicamentosCreados = await medicamentosService.findAll();
+
+    for (const [idx, medicamento] of medicamentosCreados.entries()) {
+      await lotesService.create({
+        id_medicamento: medicamento.id_medicamento,
+        numero_lote: `L${(idx + 1).toString().padStart(4, '0')}`,
+        fecha_fabricacion: new Date(2024, 0, 1),
+        fecha_caducidad: new Date(2026, 0, 1),
+        cantidad_inicial: 100 + idx * 10,
+        cantidad_actual: 100 + idx * 10,
+      });
+    }
+
+    console.log(`${medicamentosCreados.length} lotes creados`);
+
+    console.log('Creando inventarios...');
+
+    const distritos = await distritosService.findAll();
+    const medicamentosInventario = await medicamentosService.findAll();
+
+    for (const distrito of distritos) {
+      for (const medicamento of medicamentosInventario) {
+        await inventariosService.create({
+          id_distrito: distrito.id_distrito,
+          id_medicamento: medicamento.id_medicamento,
+          cantidad_disponible: 100,
+          estado_inventario: 'DISPONIBLE',
+          id_lote: 1,
+          punto_reorden: 20,
+        });
+      }
+    }
+
+    console.log('Inventarios creados');
+
+
+    const medicamentosAll = await medicamentosService.findAll();
+
+    // PEDIDOS
+    console.log('Creando pedidos...');
+    const usuarios = await usuariosService.findAll();
+    const distritosAll = await distritosService.findAll();
+    const pedido = await pedidosService.create({
+      id_usuario_solicitante: usuarios[0].user_id,
+      id_usuario_autorizador: usuarios[0].user_id,
+      fecha_limite_requerida: '2025-06-01',
+      observaciones: 'Pedido de prueba desde seed',
+      prioridad: 'MEDIA',
+      detalles: [
+        {
+          id_medicamento: medicamentosAll[0].id_medicamento,
+          cantidad_solicitada: 10,
+          observaciones: 'Preferir lote más reciente'
+        },
+        {
+          id_medicamento: medicamentosAll[1].id_medicamento,
+          cantidad_solicitada: 5
+        }
+      ]
+    });
+    console.log('Pedido creado:', pedido);
+
+    // DETALLE_PEDIDO
+    console.log('Creando detalle de pedido...');
+    const detallePedido = await detallePedidosService.create({
+      id_pedido: pedido.id_pedido,
+      id_medicamento: medicamentosAll[0].id_medicamento,
+      cantidad_solicitada: 10,
+      observaciones: 'Preferir lote más reciente'
+    });
+    console.log('Detalle de pedido creado:', detallePedido);
+
+    // MOVIMIENTOS
+    console.log('Creando movimiento...');
+    const inventariosAll = await inventariosService.findAll();
+    const lotesAll = await lotesService.findAll();
+    const movimiento = await movimientosService.create({
+      id_inventario: inventariosAll[0].id_inventario,
+      id_usuario: usuarios[0].user_id,
+      id_lote: lotesAll[0].id_lote,
+      tipo: 'Salida',
+      cantidad: 10,
+      fecha_movimiento: new Date(),
+      motivo: 'Pedido de prueba desde seed',
+    });
+    console.log('Movimiento creado:', movimiento);
+
+    // ASIGNACION_USUARIO
+    console.log('Creando asignación de usuario...');
+    const asignacion = await asignacionUsuarioService.create({
+      user_id: usuarios[0].user_id,
+      id_distrito: distritosAll[0].id_distrito
+    });
+    console.log('Asignación de usuario creada:', asignacion);
+
+    // SEGUIMIENTOS
+    console.log('Creando seguimiento...');
+    const seguimiento = await seguimientosService.create({
+      id_usuario_admin: usuarios[0].user_id,
+      id_distrito: distritosAll[0].id_distrito,
+      fecha_visita: new Date(),
+      fortalezas: 'Entrega rápida',
+      debilidades: 'Ninguna',
+      sugerencias: 'Mejorar embalaje',
+      conclusiones: 'Todo correcto'
+    });
+    console.log('Seguimiento creado:', seguimiento);
+
+
 
     console.log('Proceso de semilla completado exitosamente!');
 

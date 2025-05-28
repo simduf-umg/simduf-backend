@@ -8,6 +8,16 @@ import { AuthModule } from './modules/auth/auth.module';
 import { DepartamentosModule } from './modules/departamentos/departamentos.module';
 import { MunicipiosModule } from './modules/municipios/municipios.module';
 import { DistritosModule } from './modules/distritos/distritos.module';
+import { AsignacionUsuarioModule } from './modules/asignacion-usuarios/asignacion-usuario.module';
+import { ConcentracionesModule } from './modules/concentraciones/concentraciones.module';
+import { DetallePedidosModule } from './modules/detalle-pedidos/detalle-pedidos.module';
+import { InventariosModule } from './modules/inventarios/inventarios.module';
+import { LotesModule } from './modules/lotes/lotes.module';
+import { MedicamentosModule } from './modules/medicamentos/medicamentos.module';
+import { MovimientosModule } from './modules/movimientos/movimientos.module';
+import { PedidosModule } from './modules/pedidos/pedidos.module';
+import { PresentacionesModule } from './modules/presentaciones/presentaciones.module';
+import { SeguimientosModule } from './modules/seguimientos/seguimientos.module';
 
 @Module({
   imports: [
@@ -32,6 +42,16 @@ import { DistritosModule } from './modules/distritos/distritos.module';
     DepartamentosModule,
     MunicipiosModule,
     DistritosModule,
+    AsignacionUsuarioModule,
+    ConcentracionesModule,
+    DetallePedidosModule,
+    InventariosModule,
+    LotesModule,
+    MedicamentosModule,
+    MovimientosModule,
+    PedidosModule,
+    PresentacionesModule,
+    SeguimientosModule,
   ],
 })
 export class AppModule {}
