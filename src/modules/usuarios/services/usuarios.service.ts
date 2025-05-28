@@ -38,6 +38,13 @@ export class UsuariosService {
         });
     }
 
+    async findByCorreo(correo: string): Promise<Usuario | null> {
+        return this.usuariosRepository.findOne({
+            where: { correo },
+            relations: ['persona', 'roles'],
+        });
+    }
+
     async create(createUsuarioDto: CreateUsuarioDto): Promise<Usuario> {
         // Verificar si la persona existe
         const persona = await this.personasService.findOne(createUsuarioDto.id_persona);
@@ -51,6 +58,12 @@ export class UsuariosService {
         const existingUser = await this.findByUsername(createUsuarioDto.username);
         if (existingUser) {
             throw new ConflictException(`El nombre de usuario '${createUsuarioDto.username}' ya existe`);
+        }
+
+        // Verificar si el correo ya existe
+        const existingCorreo = await this.findByCorreo(createUsuarioDto.correo);
+        if (existingCorreo) {
+            throw new ConflictException(`El correo '${createUsuarioDto.correo}' ya está registrado`);
         }
 
         // Encriptar la contraseña
@@ -104,6 +117,15 @@ export class UsuariosService {
                 throw new ConflictException(`El nombre de usuario '${updateUsuarioDto.username}' ya existe`);
             }
             usuario.username = updateUsuarioDto.username;
+        }
+
+        // Verificar si el correo ya existe si se proporciona
+        if (updateUsuarioDto.correo && updateUsuarioDto.correo !== usuario.correo) {
+            const existingCorreo = await this.findByCorreo(updateUsuarioDto.correo);
+            if (existingCorreo) {
+                throw new ConflictException(`El correo '${updateUsuarioDto.correo}' ya está registrado`);
+            }
+            usuario.correo = updateUsuarioDto.correo;
         }
 
         // Actualizar campos básicos

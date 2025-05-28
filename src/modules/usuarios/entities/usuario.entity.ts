@@ -29,6 +29,13 @@ export class Usuario {
   username: string;
 
   @ApiProperty({
+    description: 'Correo electrónico del usuario',
+    example: 'usuario@ejemplo.com',
+  })
+  @Column({ type: 'varchar', length: 100, unique: true })
+  correo: string;
+
+  @ApiProperty({
     description: 'Contraseña encriptada del usuario',
     example: '$2b$10$abcdefghijklmnopqrstuvwxyz',
   })
