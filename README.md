@@ -19,18 +19,6 @@ SIMDUF es un sistema modular desarrollado con NestJS.
 El proyecto sigue una arquitectura modular por capas:
 
 ```plaintext
-src/
-  modules/
-    auth/                      # Módulo de autenticación 
-    personas/                  # Módulo de personas
-    usuarios/                  # Módulo de usuarios
-    roles/                     # Módulo de roles
-  filters/                     # Filtros globales
-  app.module.ts                # Módulo principal
-  main.ts                      # Punto de entrada
-```
-
-```plaintext
 +----------------+      +-----------------+     +---------------+
 |  CONTROLLERS   |----->|    SERVICES     |---->| REPOSITORIES  |
 | (API Endpoints)|      | (Business Logic)|     | (Data Access) |
