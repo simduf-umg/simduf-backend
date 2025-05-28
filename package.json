@@ -21,7 +21,7 @@
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "test": "jest",
+    "test:jest": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
@@ -81,7 +81,9 @@
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.7.3",
-    "typescript-eslint": "^8.20.0"
+    "typescript-eslint": "^8.20.0",
+    "chai": "^4.3.7",
+    "ethers": "^6.8.0"
   },
   "jest": {
     "moduleFileExtensions": [
@@ -99,13 +101,5 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
-  },
-    "devDependencies": {
-    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
-    "@openzeppelin/contracts": "^5.3.0",
-    "chai": "^4.3.7",
-    "ethers": "^6.8.0",
-    "hardhat": "^2.24.1"
   }
-  
 }
