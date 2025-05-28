@@ -16,6 +16,19 @@ export class CreateUsuarioDto {
   username: string;
 
   @ApiProperty({
+    description: 'Correo electrónico del usuario',
+    example: 'usuario@ejemplo.com',
+    minLength: 5,
+    maxLength: 100,
+  })
+  @IsNotEmpty({ message: 'El correo es requerido' })
+  @IsString({ message: 'El correo debe ser un texto' })
+  @Length(5, 100, {
+    message: 'El correo debe tener entre 5 y 100 caracteres',
+  })
+  correo: string;
+
+  @ApiProperty({
     description: 'Contraseña del usuario',
     example: 'Contr@seña123',
     minLength: 8,
