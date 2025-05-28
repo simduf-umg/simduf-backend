@@ -1,8 +1,7 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { Usuario } from '../../usuarios/entities/usuario.entity';
 import { DetallePedido } from '../../detalle-pedidos/entities/detalle-pedido.entity';
-import { Seguimiento } from '../../seguimientos/entities/seguimiento.entity';
 
 @Entity('pedidos')
 export class Pedido {
@@ -24,33 +23,47 @@ export class Pedido {
     description: 'ID del usuario autorizador',
     example: 2,
   })
-  @Column({ nullable: true })
+  @Column()
   id_usuario_autorizador: number;
 
   @ApiProperty({
-    description: 'Fecha del pedido',
+    description: 'Fecha de solicitud',
     example: '2024-01-15',
   })
   @Column({ type: 'date' })
-  fecha_pedido: Date;
+  fecha_solicitud: Date;
 
   @ApiProperty({
-    description: 'Fecha límite requerida',
-    example: '2024-01-20',
+    description: 'Fecha de autorización',
+    example: '2024-01-16',
   })
   @Column({ type: 'date', nullable: true })
-  fecha_limite_requerida: Date;
+  fecha_autorizacion: Date;
+
+  @ApiProperty({
+    description: 'Fecha despachada',
+    example: '2024-01-17',
+  })
+  @Column({ type: 'date', nullable: true })
+  fecha_despachada: Date;
+
+  @ApiProperty({
+    description: 'Fecha llegada distrito',
+    example: '2024-01-18',
+  })
+  @Column({ type: 'date', nullable: true })
+  fecha_llegada_distrito: Date;
 
   @ApiProperty({
     description: 'Estado del pedido',
-    example: 'Pendiente, Aprobado, Rechazado, En proceso, Completado',
-    enum: ['PENDIENTE', 'APROBADO', 'RECHAZADO', 'EN_PROCESO', 'COMPLETADO', 'CANCELADO'],
+    example: 'Pendiente, Aprobado, Rechazado',
+    enum: ['PENDIENTE', 'APROBADO', 'RECHAZADO'],
   })
-  @Column({ 
-    type: 'varchar', 
-    length: 20, 
+  @Column({
+    type: 'varchar',
+    length: 20,
     default: 'PENDIENTE',
-    enum: ['PENDIENTE', 'APROBADO', 'RECHAZADO', 'EN_PROCESO', 'COMPLETADO', 'CANCELADO']
+    enum: ['PENDIENTE', 'APROBADO', 'RECHAZADO'],
   })
   estado: string;
 
@@ -61,66 +74,15 @@ export class Pedido {
   @Column({ type: 'text', nullable: true })
   observaciones: string;
 
-  @ApiProperty({
-    description: 'Motivo en caso de rechazo',
-    example: 'Stock insuficiente',
-  })
-  @Column({ type: 'text', nullable: true })
-  motivo_rechazo: string;
-
-  @ApiProperty({
-    description: 'Prioridad del pedido',
-    example: 'ALTA, MEDIA, BAJA',
-    enum: ['ALTA', 'MEDIA', 'BAJA'],
-  })
-  @Column({ 
-    type: 'varchar', 
-    length: 10, 
-    default: 'MEDIA',
-    enum: ['ALTA', 'MEDIA', 'BAJA']
-  })
-  prioridad: string;
-
-  @ApiProperty({
-    description: 'Fecha de autorización',
-    example: '2024-01-16T10:30:00Z',
-  })
-  @Column({ type: 'timestamp', nullable: true })
-  fecha_autorizacion: Date;
-
-  @ApiProperty({
-    description: 'Fecha de completado',
-    example: '2024-01-18T15:45:00Z',
-  })
-  @Column({ type: 'timestamp', nullable: true })
-  fecha_completado: Date;
-
-  @ApiProperty({
-    description: 'Fecha de creación del pedido',
-    example: '2024-01-15T08:00:00Z',
-  })
-  @CreateDateColumn()
-  fecha_creacion: Date;
-
-  @ApiProperty({
-    description: 'Fecha de última actualización',
-    example: '2024-01-16T10:30:00Z',
-  })
-  @UpdateDateColumn()
-  fecha_actualizacion: Date;
-
-  // Relación con Usuario Solicitante
-  @ManyToOne(() => Usuario, (usuario) => usuario.id_persona)
+  // Relaciones
+  @ManyToOne(() => Usuario)
   @JoinColumn({ name: 'id_usuario_solicitante' })
   usuario_solicitante: Usuario;
 
-  // Relación con Usuario Autorizador
-  @ManyToOne(() => Usuario, (usuario) => usuario.id_persona)
+  @ManyToOne(() => Usuario)
   @JoinColumn({ name: 'id_usuario_autorizador' })
   usuario_autorizador: Usuario;
 
-  // Relación con Detalle de Pedidos
-  @OneToMany(() => DetallePedido, (detalle) => detalle.id_pedido)
+  @OneToMany(() => DetallePedido, (detalle) => detalle.pedido)
   detalles: DetallePedido[];
-
 }

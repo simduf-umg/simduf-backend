@@ -5,11 +5,11 @@ export class CambiarEstadoPedidoDto {
   @ApiProperty({
     description: 'Nuevo estado del pedido',
     example: 'APROBADO',
-    enum: ['PENDIENTE', 'APROBADO', 'RECHAZADO', 'EN_PROCESO', 'COMPLETADO', 'CANCELADO'],
+    enum: ['PENDIENTE', 'APROBADO', 'RECHAZADO'],
   })
   @IsNotEmpty({ message: 'El estado es requerido' })
-  @IsIn(['PENDIENTE', 'APROBADO', 'RECHAZADO', 'EN_PROCESO', 'COMPLETADO', 'CANCELADO'], {
-    message: 'El estado debe ser PENDIENTE, APROBADO, RECHAZADO, EN_PROCESO, COMPLETADO o CANCELADO',
+  @IsIn(['PENDIENTE', 'APROBADO', 'RECHAZADO'], {
+    message: 'El estado debe ser PENDIENTE, APROBADO o RECHAZADO',
   })
   estado: string;
 
@@ -30,13 +30,4 @@ export class CambiarEstadoPedidoDto {
   @IsOptional()
   @IsString({ message: 'Las observaciones deben ser un texto' })
   observaciones?: string;
-
-  @ApiProperty({
-    description: 'Motivo en caso de rechazo',
-    example: 'Stock insuficiente para algunos medicamentos',
-    required: false,
-  })
-  @IsOptional()
-  @IsString({ message: 'El motivo de rechazo debe ser un texto' })
-  motivo_rechazo?: string;
 }

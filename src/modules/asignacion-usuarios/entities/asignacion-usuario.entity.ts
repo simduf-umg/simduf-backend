@@ -6,46 +6,31 @@ import { Distrito } from '../../distritos/entities/distrito.entity';
 
 @Entity('asignacion_usuario')
 export class AsignacionUsuario {
-  @ApiProperty({
-    description: 'Identificador único de la asignación',
-    example: 1,
-  })
+  @ApiProperty({ description: 'Identificador único de la asignación', example: 1 })
   @PrimaryGeneratedColumn()
   id_asignacion: number;
 
-  @ApiProperty({
-    description: 'ID del usuario asignado',
-    example: 1,
-  })
+  @ApiProperty({ description: 'ID del usuario asignado', example: 1 })
   @Column()
   user_id: number;
 
-  @ApiProperty({
-    description: 'ID del departamento (solo para administradores)',
-    example: 1,
-    required: false,
-  })
+  @ApiProperty({ description: 'ID del departamento (solo para administradores)', example: 1, required: false })
   @Column({ nullable: true })
   id_departamento: number;
 
-  @ApiProperty({
-    description: 'ID del distrito (solo para encargados)',
-    example: 1,
-    required: false,
-  })
+  @ApiProperty({ description: 'ID del distrito (solo para encargados)', example: 1, required: false })
   @Column({ nullable: true })
   id_distrito: number;
 
-  // Relaciones
-  @ManyToOne(() => Usuario, (usuario) => usuario.id_persona)
+  @ManyToOne(() => Usuario)
   @JoinColumn({ name: 'user_id' })
   usuario: Usuario;
 
-  @ManyToOne(() => Departamento, (departamento) => departamento.id_departamento, { nullable: true })
+  @ManyToOne(() => Departamento, { nullable: true })
   @JoinColumn({ name: 'id_departamento' })
   departamento: Departamento;
 
-  @ManyToOne(() => Distrito, (distrito) => distrito.id_distrito, { nullable: true })
+  @ManyToOne(() => Distrito, { nullable: true })
   @JoinColumn({ name: 'id_distrito' })
   distrito: Distrito;
 }

@@ -25,11 +25,11 @@ export class CreateLoteDto {
   numero_lote: string;
   
   @ApiProperty({
-    description: 'Fecha de caducidad',
+    description: 'Fecha de fabricación',
     example: '2025-12-31',
   })
-  @IsNotEmpty({ message: 'La fecha de fabricacion es requerida' })
-  @IsDateString({}, { message: 'La fecha de fabricacion debe ser una fecha válida' })
+  @IsNotEmpty({ message: 'La fecha de fabricación es requerida' })
+  @IsDateString({}, { message: 'La fecha de fabricación debe ser una fecha válida' })
   fecha_fabricacion: Date;
 
   @ApiProperty({
